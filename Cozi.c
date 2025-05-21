@@ -48,7 +48,7 @@ int dequeue(QueueSLL* q) {
     Node* temp = q->front;
     int val = temp->data;
     q->front = q->front->next;
-    if (q->front == NULL) q->rear = NULL; // coada devine goală
+    if (q->front == NULL) q->rear = NULL; // coada devine goala
     free(temp);
     return val;
 }
