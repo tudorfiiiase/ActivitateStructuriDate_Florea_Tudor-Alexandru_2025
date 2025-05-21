@@ -25,7 +25,7 @@ int isValidExpression(const char* expr) {
     Stack stiva;
     init(&stiva);
 
-    char prev = '\0';  // tipul precedent: 'o' = operand, 'p' = paranteză, '+'
+    char prev = '\0'; 
     int i = 0;
     while (expr[i]) {
         char c = expr[i];
@@ -36,42 +36,41 @@ int isValidExpression(const char* expr) {
         }
 
         if (isdigit(c)) {
-            // operand valid
             if (prev == 'o') {
-                // două operanzi consecutivi fără operator (ex: 23 45)
+                // două operanzi consecutivi fara operator
                 return 0;
             }
             prev = 'o';
-            while (isdigit(expr[i])) i++; // salt peste numărul complet
+            while (isdigit(expr[i])) i++;
             continue;
         }
 
         if (c == '(') {
-            if (prev == 'o') return 0; // ex: 3(4+5)
+            if (prev == 'o') return 0;
             push(&stiva, c);
             prev = '(';
         }
         else if (c == ')') {
-            if (isEmpty(&stiva)) return 0; // închidere fără deschidere
-            if (prev == '(' || isOperator(prev)) return 0; // ex: () sau +)
+            if (isEmpty(&stiva)) return 0;
+            if (prev == '(' || isOperator(prev)) return 0; 
             pop(&stiva);
             prev = ')';
         }
         else if (isOperator(c)) {
-            if (prev == '\0' || isOperator(prev) || prev == '(') return 0; // ex: +3, *+, (+3
+            if (prev == '\0' || isOperator(prev) || prev == '(') return 0;
             prev = c;
         }
         else {
-            return 0; // caracter necunoscut
+            return 0; 
         }
 
         i++;
     }
 
-    // nu trebuie să se termine cu operator
+    // nu trebuie sa se termine cu operator
     if (isOperator(prev) || prev == '(') return 0;
 
-    return isEmpty(&stiva); // valid doar dacă toate parantezele au fost închise
+    return isEmpty(&stiva); // valid doar daca toate parantezele au fost inchise
 }
 int main() {
     const char* expresii[] = {
